@@ -1,4 +1,4 @@
-// Steve Phillips / elimisteve / fraktil
+// Steve Phillips / elimisteve
 // 2010.12.15
 
 package main

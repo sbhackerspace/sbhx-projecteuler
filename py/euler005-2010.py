@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Steve Phillips / fraktil
+# Steve Phillips / elimisteve
 # 2010.03.22
 
 import sys
