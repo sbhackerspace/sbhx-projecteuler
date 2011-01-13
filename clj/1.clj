@@ -13,7 +13,7 @@
 (defn enumerate-multiples[max & divisors]
     (loop [cnt max, multip nil, divs divisors]
       (when (= cnt 0)
-	nil)
+	multip)
       (if (divisible? cnt
 		      divs)
       (recur (dec cnt)
