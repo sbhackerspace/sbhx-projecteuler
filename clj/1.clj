@@ -1,5 +1,7 @@
 (defn divisible?[number & divisors]
   (loop [n number divs divisors]
+    (when (nil? divs)
+      false)
     (if (= 0
 	   (mod n
 		(first divs)))
