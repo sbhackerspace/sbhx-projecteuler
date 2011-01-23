@@ -1,6 +1,8 @@
 ; Steve Phillips / elimisteve
 ; 2011.01.22
 
+(def NUM-DIAG 4)
+
 (def rows
 	 [[ 8  2 22 97 38 15  0 40  0 75  4  5  7 78 52 12 50 77 91  8]
 	  [49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48  4 56 62  0]
@@ -23,18 +25,30 @@
 	  [20 73 35 29 78 31 90  1 74 31 49 71 48 86 81 16 23 57  5 54]
 	  [ 1 70 54 71 83 51 54 69 16 92 33 48 61 43 52  1 89 19 67 48]])
 
-; All 4-number combos along long diagonal
-; (0,0), (1,1), (2,2), and (3,3)
-; (1,1), (2,2), (3,3), and (4,4)
-; (2,2), (3,3), (4,4), and (5,5), etc
-(apply max
-	   (for [col (range 17)]
-		 (apply *
-				(for [num (range col (+ 4 col))]
-				  ((rows num) num)))))
+(defn num-at [row col]
+  ((rows row) col))
 
-; Product of first 4 diagonal nums
-; (0,0), (1,1), (2,2), and (3,3)
-(apply *
-	   (for [num (range 4)]
-		 ((rows num) num)))
+(defn diag-at
+  "Returns list of NUM-DIAG (in our case, 4) numbers along diagonal starting at [row col] in direction sign, which is + or -"
+  [row col sign]
+  (if (and (or (= sign +) (= sign -))
+		   (and (<= 0 row) (> 20 row))
+		   (and (<= 0 col) (> 20 col))
+		   (or (and (<  row 17)
+					(<  col 17)
+					(=  sign +))
+			   (and (<  row 17)
+					(>= col  3)
+					(=  sign -))))
+	(list
+	 (num-at    row          col  )
+	 (num-at (+ row 1) (sign col 1))
+	 (num-at (+ row 2) (sign col 2))
+	 (num-at (+ row 3) (sign col 3)))))
+
+(apply max
+	   (apply concat
+			  (for [row (range 20)
+					col (range 20)]
+				(list (apply * (diag-at row col +))
+					  (apply * (diag-at row col -))))))
