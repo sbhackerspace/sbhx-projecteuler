@@ -18,10 +18,8 @@ func main() {
 		num := float64(i+1)
 		total += math.Pow(num, num)
 	}
-
 	// Easier float-to-int-as-string conversion than importing strconv
 	answer := fmt.Sprintf("%0.f", total)
-
 	// Skip over all but the last 10 digits
 	ndx := 0
 	if len(answer) > 10 {
